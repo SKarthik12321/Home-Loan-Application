@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: home-loan-application
+  config:
+    import: optional:dotenv:.env
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/home_loan_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: false
+
+server:
+  port: ${SERVER_PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+app:
+  loan:
+    default-annual-rate: ${APP_LOAN_DEFAULT_ANNUAL_RATE:8.5}
+  security:
+    jwt:
+      # Override in .env / environment — default is for local bootstrap only (not for production).
+      secret: ${JWT_SECRET:ABCDEFGHIJKLMNOPQRSTUVWXYZ123456}
+      expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
+logging:
+  level:
+    com.homeloan.application.aspect: DEBUG
+    org.springframework.security: INFO

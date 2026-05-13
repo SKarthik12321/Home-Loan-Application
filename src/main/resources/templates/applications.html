@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Loan applications</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<main class="container">
+    <h1>Loan applications</h1>
+    <p class="muted">Read-only list populated from the same service layer as the REST API.</p>
+    <table th:if="${loans != null and !loans.empty}">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Applicant</th>
+            <th>Amount</th>
+            <th>Tenure</th>
+            <th>Status</th>
+            <th>Indicative EMI</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="l : ${loans}">
+            <td th:text="${l.id}">1</td>
+            <td th:text="${l.applicantName}">Name</td>
+            <td th:text="${l.requestedAmount}">0</td>
+            <td th:text="${l.tenureMonths}">0</td>
+            <td th:text="${l.status}">DRAFT</td>
+            <td th:text="${l.indicativeMonthlyEmi}">0</td>
+        </tr>
+        </tbody>
+    </table>
+    <p th:if="${loans == null or loans.empty}">No applications yet.</p>
+    <p><a href="/">← Back</a></p>
+</main>
+</body>
+</html>
